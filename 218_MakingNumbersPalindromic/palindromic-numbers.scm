@@ -1,0 +1,8 @@
+(define (palindrome a)
+  (define (ns n) (number->string n))
+  (define (revstring s)(list->string (reverse (string->list s))))
+  (define (palin a k)(if ((lambda (a)(string=? a (revstring a)))(number->string a))
+           (list a k)(palin ((lambda(a)(+ (string->number(revstring (number->string a)))a))a)(+ k 1))))
+  (let ((result (palin a 0))) (string-append (ns a) " gets palindromic after " (ns(car (cdr result))) " steps: " (ns(car result))))
+)
+(map palindrome '(11 68 123 286 196196871))

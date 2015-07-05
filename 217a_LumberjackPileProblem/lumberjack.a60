@@ -1,0 +1,58 @@
+BEGIN INTEGER SIDELENGTH, LOGNUM;
+
+  PROCEDURE PRINTARRAY(A,N);
+  BEGIN  
+    INTEGER I,J;
+    FOR I:=1 STEP 1 UNTIL N DO
+        BEGIN 
+        FOR J:=1 STEP 1 UNTIL N DO
+            BEGIN 
+                outinteger(1,A[I,J]);
+            END;
+            outstring(1,"\n");
+        END;
+  END;
+
+  PROCEDURE PLACELOGS(A,N,L,M);
+    BEGIN
+    INTEGER I,J;
+    AGAIN:
+    FOR I:=1 STEP 1 UNTIL N DO
+        BEGIN 
+        FOR J:=1 STEP 1 UNTIL N DO
+            BEGIN 
+
+                IF A[I,J]=M AND L > 0 THEN
+                    BEGIN
+                        L:=L-1; A[I,J] := A[I,J]+1;
+                    END;
+            END;
+
+        END;
+
+        M:=M+1;
+        IF L > 0 THEN GOTO AGAIN;
+        PRINTARRAY(A,N);
+  END;
+
+  ininteger(0,SIDELENGTH);
+  ininteger(0,LOGNUM);
+
+  BEGIN
+    ARRAY LUMBERYARD[1:SIDELENGTH,1:SIDELENGTH];
+    INTEGER I,J,MIN;
+    MIN:=99999999;
+
+    FOR I:=1 STEP 1 UNTIL SIDELENGTH DO
+        BEGIN 
+        FOR J:=1 STEP 1 UNTIL SIDELENGTH DO
+            BEGIN 
+                ininteger(0,LUMBERYARD[I,J]);
+                MIN:= IF LUMBERYARD[I,J]<MIN THEN LUMBERYARD[I,J] ELSE MIN; 
+            END;
+        END;
+
+    PLACELOGS(LUMBERYARD, SIDELENGTH, LOGNUM, MIN);
+
+  END
+END
